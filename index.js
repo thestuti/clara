@@ -1,67 +1,51 @@
+const inputEl = document.getElementById("msg_send");
+const divEl = document.createElement("div");
+const msgWrapper = document.getElementById("msg");
+const replyBtn = document.getElementById("reply");
 
+function scroll() {
+  const scrollMsg = msgWrapper;
+  scrollMsg.scrollTop = scrollMsg.scrollHeight;
+}
 
-	function init() {
-		let res_elm = document.createElement("div");
-		res_elm.innerHTML="Hello Myself Clara. A chatbot developed by Stuti  , How can I help you?" ;
-		res_elm.setAttribute("class","left");
+function init() {
+  let res_elm = document.createElement("div");
+  res_elm.innerHTML =
+    "Hello Myself Clara. A chatbot developed by Stuti  , How can I help you?";
+  res_elm.setAttribute("class", "left");
+  msgWrapper.appendChild(res_elm);
+}
 
-		document.getElementById('msg').appendChild(res_elm);
-	}
+async function onMessage(e) {
+  e.preventDefault();
+  const inputMsg = inputEl.value;
+  if (!inputMsg) return;
 
-	
-	document.getElementById('reply').addEventListener("click", async (e) => {
-		e.preventDefault();
+  const response = await axios.get(
+    `https://api.monkedev.com/fun/chat?msg=${inputMsg}`
+  );
 
+  const responseData = JSON.stringify(response.data.response);
+  const senderEl = document.createElement("div");
+  const receiverEl = document.createElement("div");
+  const senderMsgContainer = document.createElement("div");
+  const incomingMsgContainer = document.createElement("div");
 
+  senderEl.setAttribute("class", "right");
+  receiverEl.setAttribute("class", "left");
 
-		var req = document.getElementById('msg_send').value ;
+  senderEl.innerText = inputMsg;
+  receiverEl.innerText = responseData;
 
-		if (req == undefined || req== "") {
+  msgWrapper.appendChild(senderMsgContainer);
+  msgWrapper.appendChild(incomingMsgContainer);
 
-		}
-		else{
-		
-			var res = "";
-			await axios.get(`https://api.monkedev.com/fun/chat?msg=${req}`).then(data => {
-				res = JSON.stringify(data.data.response)
-			})
-      		
-			let data_req = document.createElement('div');
-			let data_res = document.createElement('div');
+  senderMsgContainer.appendChild(senderEl);
+  incomingMsgContainer.appendChild(receiverEl);
 
-			let container1 = document.createElement('div');
-			let container2 = document.createElement('div');
+  senderEl.value = "";
 
-			container1.setAttribute("class","msgCon1");
-			container2.setAttribute("class","msgCon2");
+  scroll();
+}
 
-			data_req.innerHTML = req ;
-			data_res.innerHTML = res ;
-
-
-			data_req.setAttribute("class","right");
-			data_res.setAttribute("class","left");
-
-			let message = document.getElementById('msg');
-
-			
-			message.appendChild(container1);
-			message.appendChild(container2);
-
-			container1.appendChild(data_req);
-			container2.appendChild(data_res);
-
-			document.getElementById('msg_send').value = "";
-
-		function scroll() {
-			var scrollMsg = document.getElementById('msg')
-			scrollMsg.scrollTop = scrollMsg.scrollHeight ;
-		}
-		scroll();
-
-		}
-
-	
-		});
-
-
+replyBtn.addEventListener("click", onMessage);
