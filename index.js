@@ -11,7 +11,7 @@ function scroll() {
 function init() {
   let res_elm = document.createElement("div");
   res_elm.innerHTML =
-    "Hello Myself Clara. A chatbot developed by Stuti  , How can I help you?";
+    "Hello I'm Clara, a chatbot developed by Stuti. How can I help you?";
   res_elm.setAttribute("class", "left");
   msgWrapper.appendChild(res_elm);
 }
