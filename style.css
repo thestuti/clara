@@ -53,6 +53,10 @@ body {
   border-radius: 32px;
   color: #eee;
   transition-duration: 0.2s;
+  cursor: pointer;
+}
+.send:focus{
+  text-decoration:underline;
 }
 .send:active {
   font-size: 16px;

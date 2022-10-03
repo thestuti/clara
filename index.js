@@ -1,7 +1,6 @@
 const inputEl = document.getElementById("msg_send");
 const divEl = document.createElement("div");
 const msgWrapper = document.getElementById("msg");
-const replyBtn = document.getElementById("reply");
 
 function scroll() {
   const scrollMsg = msgWrapper;
@@ -16,8 +15,7 @@ function init() {
   msgWrapper.appendChild(res_elm);
 }
 
-async function onMessage(e) {
-  e.preventDefault();
+async function onMessage() {
   const inputMsg = inputEl.value;
   if (!inputMsg) return;
 
@@ -48,4 +46,12 @@ async function onMessage(e) {
   scroll();
 }
 
-replyBtn.addEventListener("click", onMessage);
+
+// for handling enter keypress or submits
+const form = document.getElementById("message_form");
+
+form.addEventListener("submit", (e) => {
+  // preventing reloading of the document
+  e.preventDefault();
+  onMessage();
+})
