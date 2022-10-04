@@ -7,14 +7,6 @@ function scroll() {
   scrollMsg.scrollTop = scrollMsg.scrollHeight;
 }
 
-function init() {
-  let res_elm = document.createElement("div");
-  res_elm.innerHTML =
-    "Hello I'm Clara, a chatbot developed by Stuti. How can I help you?";
-  res_elm.setAttribute("class", "left");
-  msgWrapper.appendChild(res_elm);
-}
-
 async function onMessage() {
   const inputMsg = inputEl.value;
   if (!inputMsg) return;
@@ -46,7 +38,6 @@ async function onMessage() {
   scroll();
 }
 
-
 // for handling enter keypress or submits
 const form = document.getElementById("message_form");
 
@@ -54,4 +45,4 @@ form.addEventListener("submit", (e) => {
   // preventing reloading of the document
   e.preventDefault();
   onMessage();
-})
+});
