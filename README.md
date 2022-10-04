@@ -21,7 +21,7 @@ Have a fun chat with clara :)
     </td> 
   <td align="Center" width="25%">
 	  <a href="https://www.tc39.es/" target="_blank" rel="noreferrer"><img src="https://img.icons8.com/fluency/2x/javascript.png" width="36" height="36" alt="JavaScript" /></a>
-	<br>TypeScript
+	<br>Javascript
     </td>   
 	  </tr>
 </tbody>
