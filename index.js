@@ -11,11 +11,17 @@ async function onMessage() {
   const inputMsg = inputEl.value;
   if (!inputMsg) return;
 
-  const response = await axios.get(
-    `https://api.monkedev.com/fun/chat?msg=${inputMsg}`
-  );
+  let response, responseData;
+  try {
+    response = await axios.get(
+      `https://api.monkedev.com/fun/chat?msg=${inputMsg}`
+    );
+    responseData = JSON.stringify(response.data.response);
+  } catch (e) {
+    responseData = e.toString();
+    console.error(e);
+  }
 
-  const responseData = JSON.stringify(response.data.response);
   const senderEl = document.createElement("div");
   const receiverEl = document.createElement("div");
   const senderMsgContainer = document.createElement("div");
@@ -45,4 +51,5 @@ form.addEventListener("submit", (e) => {
   // preventing reloading of the document
   e.preventDefault();
   onMessage();
+  inputEl.value = "";
 });
