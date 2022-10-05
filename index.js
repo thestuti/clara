@@ -7,23 +7,21 @@ function scroll() {
   scrollMsg.scrollTop = scrollMsg.scrollHeight;
 }
 
-function init() {
-  let res_elm = document.createElement("div");
-  res_elm.innerHTML =
-    "Hello I'm Clara, a chatbot developed by Stuti. How can I help you?";
-  res_elm.setAttribute("class", "left");
-  msgWrapper.appendChild(res_elm);
-}
-
 async function onMessage() {
   const inputMsg = inputEl.value;
   if (!inputMsg) return;
 
-  const response = await axios.get(
-    `https://api.monkedev.com/fun/chat?msg=${inputMsg}`
-  );
+  let response, responseData;
+  try {
+    response = await axios.get(
+      `https://api.monkedev.com/fun/chat?msg=${inputMsg}`
+    );
+    responseData = JSON.stringify(response.data.response);
+  } catch (e) {
+    responseData = e.toString();
+    console.error(e);
+  }
 
-  const responseData = JSON.stringify(response.data.response);
   const senderEl = document.createElement("div");
   const receiverEl = document.createElement("div");
   const senderMsgContainer = document.createElement("div");
@@ -46,7 +44,6 @@ async function onMessage() {
   scroll();
 }
 
-
 // for handling enter keypress or submits
 const form = document.getElementById("message_form");
 
@@ -54,4 +51,5 @@ form.addEventListener("submit", (e) => {
   // preventing reloading of the document
   e.preventDefault();
   onMessage();
-})
+  inputEl.value = "";
+});
